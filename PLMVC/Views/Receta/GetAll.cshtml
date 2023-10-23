@@ -1,0 +1,44 @@
+﻿@model ML.Receta
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>LISTA GENERAL DE RECETAS</h1>
+<br />
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table table-dark">
+            <tr>
+                <th>EDITAR</th>
+                <th>ID RECETA</th>
+                <th>FECHA DE CONSULTA</th>
+                <th>DIAGNOSTICO</th>
+                <th>NOMBRE MEDICO</th>
+                <th>NOTA ADICIONAL</th>
+                <th>ID PACIENTE</th>
+                <th>PACIENTE</th>
+                <th>ELIMINAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Receta registro in Model.Recetas)
+            {
+                <tr>
+                    <td> <a href="@Url.Action("Form","Receta", new{idReceta = registro.IdReceta})" class="btn btn-warning">EDITAR</a> </td>
+                    <td>@registro.IdReceta</td>
+                    <td>@registro.FechaConsulta</td>
+                    <td>@registro.Diagnostico</td>
+                    <td>@registro.NombreMedico</td>
+                    <td>@registro.NotaAdicional</td>
+                    <td>@registro.Paciente.IdPaciente</td>
+                    <td>@registro.Paciente.Nombre</td>
+                    <td> <a href="@Url.Action("Delete","Receta", new{idReceta = registro.IdReceta})" class="btn btn-danger">ELIMINAR</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<a href="@Url.Action("Form","Receta")" class="btn btn-outline-success">AGREGAR NUEVA RECETA</a>
+

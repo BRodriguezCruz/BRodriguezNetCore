@@ -1,0 +1,80 @@
+﻿@model ML.Receta
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>INGRESA LOS CAMPOS REQUERIDOS</h1>
+<br />
+
+@using (Html.BeginForm("Form", "Receta", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.IdReceta)
+
+    if (Model.IdReceta != 0)
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.IdReceta)
+                @Html.TextBoxFor(model => model.IdReceta , new {@class = "form-control", disabled = "true"})
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.FechaConsulta)
+                @Html.TextBoxFor(model => model.FechaConsulta , new {@class = "form-control", @type = "date", id = "datePicker"})
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.FechaConsulta)
+                @Html.TextBoxFor(model => model.FechaConsulta , new {@class = "form-control", @type = "date", id = "datePicker"})
+            </div>
+        </div>
+    }
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Diagnostico)
+            @Html.TextBoxFor(model => model.Diagnostico , new {@class = "form-control"})
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.NombreMedico)
+            @Html.TextBoxFor(model => model.NombreMedico , new {@class = "form-control"})
+        </div>
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.NotaAdicional)
+            @Html.TextBoxFor(model => model.NotaAdicional , new {@class = "form-control"})
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Paciente.IdPaciente)
+            @Html.DropDownListFor(model => model.Paciente.IdPaciente, new SelectList(Model.Paciente.Pacientes,"IdPaciente","Nombre"), "SELECCIONA OPCION", new{@class = "form-control"})
+        </div>
+    </div>
+    <hr />
+    <button class="btn btn-success" type="submit">HECHO</button>
+    <a class="btn btn-outline-warning" href="@Url.Action("GetAll","Receta")">VOLVER</a>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+    function(){
+        $("#datePicker").datepicker({
+            dateFormat: "dd-mm-yy"
+        });
+    }
+
+    // Getter
+    var dateFormat = $("#datePicker").datepicker("option", "dateFormat");
+
+    // Setter
+    $("#datePicker").datepicker("option", "dateFormat", "dd-mm-yy");
+
+</script>
